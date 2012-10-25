@@ -2,29 +2,31 @@ $(function () {
     var from = new Date(2012, 0, 1).getTime(),
         to = new Date().getTime(),
         start = to - 30 * 24 * 3600 * 1000,
-        masterChart, detailChart, countChart,
         minData = [],
         avgData = [],
         maxData = [],
         success = [],
         running = [],
-        failure = [];
+        failure = [],
+        nbDays = 0;
             
-    for (var current = from, i = 0; current <= to ; current = new Date(current + 24 * 3600 * 1000).getTime()) {
-        minData[i] = Math.floor(Math.random() * 1000 * 20);
-        avgData[i] = Math.floor(Math.random() * 1000 * 60 * 2) + 1000 * 20;
-        maxData[i] = Math.floor(Math.random() * 1000 * 60 * 8) + 1000 * 20 + 1000 * 60 * 2;
-        success[i] = Math.floor(Math.random() * 1000) + 2000;
-        running[i] = Math.floor(Math.random() * 50) + 50;
-        failure[i] = Math.floor(Math.random() * 400) + 100;
+    for (var current = from; current <= to ; current = new Date(current + 24 * 3600 * 1000).getTime()) {
+        minData[nbDays] = Math.floor(Math.random() * 1000 * 20);
+        avgData[nbDays] = Math.floor(Math.random() * 1000 * 60 * 2) + 1000 * 20;
+        maxData[nbDays] = Math.floor(Math.random() * 1000 * 60 * 8) + 1000 * 20 + 1000 * 60 * 2;
+        success[nbDays] = Math.floor(Math.random() * 1000) + 2000;
+        running[nbDays] = Math.floor(Math.random() * 50) + 50;
+        failure[nbDays] = Math.floor(Math.random() * 400) + 100;
                 
-        ++i;
+        ++nbDays;
     }
+    
+    var masterChart, detailChart;
 
     function createMaster() {
         masterChart = new Highcharts.Chart({
             chart: {
-                renderTo: 'master-container',
+                renderTo: 'master-chartContainer',
                 zoomType: 'x',
                 borderWidth: 0,
                 marginLeft: 50,
@@ -86,7 +88,7 @@ $(function () {
                 type: 'datetime',
                 minPadding: 0,
                 maxPadding: 0,
-                minRange: (i - 1) * 24 * 3600 * 1000,
+                minRange: (nbDays - 1) * 24 * 3600 * 1000,
                 tickWidth: 0,
                 dateTimeLabelFormats: {
                     month: '%B %Y'
@@ -156,7 +158,7 @@ $(function () {
                 pointStart: from,
                 data: maxData,
                 type: 'area'
-            }],
+            }]
         },
         function(masterChart) {
             createDetail(masterChart)
@@ -178,10 +180,10 @@ $(function () {
     
         detailChart = new Highcharts.Chart({
             chart: {
-                renderTo: 'detail-container',
+                renderTo: 'detail-chartContainer',
                 reflow: false,
                 marginLeft: 50,
-                marginRight: 50,
+                marginRight: 50
             },
             credits: {
                 enabled: false
@@ -287,9 +289,95 @@ $(function () {
         });
     }
                 
-    var $container = $('#container').css('position', 'relative');
-    var $detailContainer = $('<div id="detail-container">').css({ height: 600 }).appendTo($container);
-    var $masterContainer = $('<div id="master-container">').css({ position: 'absolute', top: 600, height: 100, width: '100%' }).appendTo($container);
+    var $chartContainer = $('#chartContainer').css('position', 'relative');
+    $('<div id="detail-chartContainer">').css({ height: 600 }).appendTo($chartContainer);
+    $('<div id="master-chartContainer">').css({ position: 'absolute', top: 600, height: 100, width: '100%' }).appendTo($chartContainer);
     
     createMaster();
+    
+    var stockCHart;
+    
+    stockCHart = new Highcharts.StockChart({
+		chart : {
+			renderTo : 'stockContainer'
+		},
+        credits: {
+            enabled: false
+        },
+        legend: {
+            align: 'left',
+            enabled: true,
+            floating: true,
+            reversed: true,
+            verticalAlign: 'top',
+            y: 10
+        },
+		rangeSelector : {
+			selected : 0 // 1 month
+		},
+		series : [
+            {
+                name : 'Max',
+                data : maxData,
+                pointInterval: 24 * 3600 * 1000,
+                pointStart: from,
+                type: 'spline'
+            }, {
+                name : 'Avg',
+                data : avgData,
+                pointInterval: 24 * 3600 * 1000,
+                pointStart: from,
+                type: 'spline'
+            }, {
+                name : 'Min',
+                data : minData,
+                pointInterval: 24 * 3600 * 1000,
+                pointStart: from,
+                type: 'spline'
+            }
+        ],
+        subtitle: {
+            text: '(in hours and minutes)'
+        },
+        title : {
+            text : 'Jobs Duration over Time'
+		},
+        tooltip: {
+            crosshairs: true,
+            formatter: function() {
+                var s = '<b>'+ Highcharts.dateFormat('%A %d %B %Y', this.x) +'</b><table><tr><td colspan="2">&nbsp;</td></tr>';
+
+                $.each(this.points, function(i, point) {
+                    s += '<tr><td><span style="color:' + point.series.color + '">' + point.series.name + '</span></td>';
+                    s += '<td align="right">' + Highcharts.dateFormat('%H h %M min %S s', point.y) + '</td></tr>';
+                });
+                            
+                s += '</table>';
+
+                return s;
+            },
+            shared: true,
+            useHTML: true
+        },
+        yAxis: [
+            {
+                type: 'datetime',
+                lineWidth: 1,
+                gridLineDashStyle: 'dot',
+                title: {
+                    text: null
+                },
+                min: 0,
+                showFirstLabel: false,
+                maxZoom: 0.1
+            }, {
+                opposite: true,
+                linkedTo: 0,
+                type: 'datetime',
+                lineWidth: 1,
+                gridLineWidth: 0,
+                showFirstLabel: false
+            }
+        ]
+	});
 });
