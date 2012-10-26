@@ -1,0 +1,161 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/marty/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/marty/Documents/git/highcharts/js/data.js",
+		"/Users/marty/Documents/git/highcharts/index.html",
+		"/Users/marty/Library/Preferences/com.apple.sidebarlists.plist",
+		"/Users/marty/Library/Preferences/com.apple.finder.plist",
+		"/Users/marty/Downloads/theme-1115.epf",
+		"/Users/marty/Downloads/solarized/xresources-colors-solarized/Xresources",
+		"/Users/marty/Documents/git/Highstock-1.2.4/js/highcharts-more.js",
+		"/Users/marty/Documents/git/Highcharts-2.3.3/js/highcharts.src.js",
+		"/Users/marty/Documents/git/Highcharts-2.3.3/js/modules/data.src.js",
+		"/Applications/Cloud9 IDE.app/Contents/installs/c9/README.md",
+		"/Users/marty/Documents/git/d3/README.md",
+		"/Volumes/USB DISK/wifi.txt",
+		"/Users/marty/Downloads/solarized/iterm2-colors-solarized/README.md"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"caret",
+			"Highcharts",
+			"dateformat",
+			"from",
+			"());\n",
+			"dateformat",
+			"pad(",
+			"dateformat",
+			"pad(",
+			"pad",
+			"numberformat",
+			".yAxis",
+			"point",
+			"datef",
+			"dateformat"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
