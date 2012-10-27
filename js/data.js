@@ -69,7 +69,7 @@ $(function () {
             tooltip: {
                 crosshairs: true,
                 formatter: function() {
-                    var s = '<b>'+ moment(this.x).format('dddd Do MMMM YYYY') +'</b><table><tr><td colspan="3">&nbsp;</td></tr>';
+                    var s = '<b>'+ moment.utc(this.x).format('dddd Do MMMM YYYY') +'</b><table><tr><td colspan="3">&nbsp;</td></tr>';
                     var duration = ['Min', 'Avg', 'Max'];
 
                     $.each(this.points, function(i, point) {
@@ -147,7 +147,7 @@ $(function () {
         $.each(lines, function(lineNo, line) {
             if (lineNo > 0) {
                 var items = line.split(',');
-                var date = moment(items[0]).valueOf();
+                var date = moment.utc(items[0]).valueOf();
                 
                 minData.push([date, parseInt(items[1])]);
                 avgData.push([date, parseInt(items[2])]);
