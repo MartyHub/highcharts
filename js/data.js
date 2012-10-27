@@ -1,9 +1,7 @@
 $(function () {
     numeral.language('fr');
 
-    var from,
-        dateData = [],
-        minData = [],
+    var minData = [],
         avgData = [],
         maxData = [],
         successData = [],
@@ -36,43 +34,31 @@ $(function () {
                 {
                     name : 'Max',
                     data : maxData,
-                    pointInterval: 24 * 3600 * 1000,
-                    pointStart: from.valueOf(),
                     type: 'spline',
                     yAxis: 0
                 }, {
                     name : 'Avg',
                     data : avgData,
-                    pointInterval: 24 * 3600 * 1000,
-                    pointStart: from.valueOf(),
                     type: 'spline',
                     yAxis: 0
                 }, {
                     name : 'Min',
                     data : minData,
-                    pointInterval: 24 * 3600 * 1000,
-                    pointStart: from.valueOf(),
                     type: 'spline',
                     yAxis: 0
                 }, {
                     name : 'Failure',
                     data : failureData,
-                    pointInterval: 24 * 3600 * 1000,
-                    pointStart: from.valueOf(),
                     type: 'area',
                     yAxis: 1
                 }, {
                     name : 'Running',
                     data : runningData,
-                    pointInterval: 24 * 3600 * 1000,
-                    pointStart: from.valueOf(),
                     type: 'area',
                     yAxis: 1
                 }, {
                     name : 'Success',
                     data : successData,
-                    pointInterval: 24 * 3600 * 1000,
-                    pointStart: from.valueOf(),
                     type: 'area',
                     yAxis: 1
                 }
@@ -90,7 +76,7 @@ $(function () {
                         s += '<tr><td><span style="color:' + point.series.color + '">' + point.series.name + '</span></td>';
 
                         if (jQuery.inArray(point.series.name, duration) > -1) {
-                            s += '<td colspan="2" align="right">' + moment(point.y).format("HH \\h mm \\min SS \\s") + '</td>';
+                            s += '<td colspan="2" align="right">' + moment.utc(point.y).format("HH \\h mm \\min ss \\s") + '</td>';
                         } else {
                             s += '<td align="right">' + numeral(point.y).format('0,0') + '</td>';
                             s += '<td align="right">' + numeral(point.percentage / 100.0).format('0%') + '</td>';
@@ -107,20 +93,15 @@ $(function () {
                 useHTML: true
             },
             xAxis: {
-                dateTimeLabelFormats: {
-                    day: '%e %b',
-                    week: '%e %b',
-                    month: '%b %y'
-                },
                 gridLineDashStyle: 'dot',
                 gridLineWidth: 1,
-                minTickInterval: 24 * 3600 * 1000 // 1 day
+                minTickInterval: 24 * 3600 * 1000, // 1 day
+                type: 'datetime'
             },
             yAxis: [
                 {
                     type: 'datetime',
                     height: 250,
-                    lineWidth: 1,
                     gridLineDashStyle: 'dot',
                     title: {
                         text: 'Duration (hours and minutes)'
@@ -137,7 +118,7 @@ $(function () {
                             color: '#FFA07A'
                         }, {
                             from: 10 * 60 * 1000,
-                            to: 60 * 60 * 1000,
+                            to: 24 * 60 * 60 * 1000,
                             color: '#EE6363'
                         }
                     ],
@@ -145,7 +126,6 @@ $(function () {
                 }, {
                     height: 250,
                     top: 350,
-                    lineWidth: 1,
                     labels: {
                         formatter: function() {
                             return this.value + ' %'
@@ -167,21 +147,14 @@ $(function () {
         $.each(lines, function(lineNo, line) {
             if (lineNo > 0) {
                 var items = line.split(',');
-                var date = moment(items[0]);
-
-                if (from == null) {
-                    from = date;
-                } else if (date < from) {
-                    from = date;
-                }
-
-                dateData.push(date);
-                minData.push(parseInt(items[1]));
-                avgData.push(parseInt(items[2]));
-                maxData.push(parseInt(items[3]));
-                successData.push(parseInt(items[4]));
-                runningData.push(parseInt(items[5]));
-                failureData.push(parseInt(items[6]));
+                var date = moment(items[0]).valueOf();
+                
+                minData.push([date, parseInt(items[1])]);
+                avgData.push([date, parseInt(items[2])]);
+                maxData.push([date, parseInt(items[3])]);
+                successData.push([date, parseInt(items[4])]);
+                runningData.push([date, parseInt(items[5])]);
+                failureData.push([date, parseInt(items[6])]);
             }
         });
         
