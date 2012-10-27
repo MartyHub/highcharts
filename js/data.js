@@ -17,10 +17,10 @@ $(function() {
                 enabled: false
             },
             legend: {
-                align: 'left',
                 enabled: true,
                 floating: true,
-                verticalAlign: 'top'
+                verticalAlign: 'top',
+                y: 25
             },
             plotOptions: {
                 area: {
